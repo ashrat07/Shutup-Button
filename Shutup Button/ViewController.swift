@@ -9,15 +9,28 @@
 import UIKit
 
 class ViewController: UIViewController {
-                            
+    
+    
+    var button: ShutupButton! = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = UIColor(red: 37/255, green: 122/255, blue: 24/255, alpha: 1)
+        
+        button = ShutupButton (frame: CGRectMake(135, 135, 40, 40))
+        button.addTarget(self, action: "toggle:", forControlEvents:.TouchUpInside)
+        self.view.addSubview(button)
+    
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override  func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+      return .LightContent
+    }
+    
+    func toggle(sender: AnyObject!) {
+        button.mute = !button.mute
+        
     }
 
 

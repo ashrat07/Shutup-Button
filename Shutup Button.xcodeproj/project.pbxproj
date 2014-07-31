@@ -12,6 +12,7 @@
 		D1A4C92D198A52EC001512A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1A4C92B198A52EC001512A2 /* Main.storyboard */; };
 		D1A4C92F198A52EC001512A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1A4C92E198A52EC001512A2 /* Images.xcassets */; };
 		D1A4C93B198A52EC001512A2 /* Shutup_ButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A4C93A198A52EC001512A2 /* Shutup_ButtonTests.swift */; };
+		D1A4C947198A5927001512A2 /* ShutupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A4C946198A5927001512A2 /* ShutupButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		D1A4C934198A52EC001512A2 /* Shutup ButtonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Shutup ButtonTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A4C939198A52EC001512A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1A4C93A198A52EC001512A2 /* Shutup_ButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shutup_ButtonTests.swift; sourceTree = "<group>"; };
+		D1A4C946198A5927001512A2 /* ShutupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShutupButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				D1A4C927198A52EC001512A2 /* AppDelegate.swift */,
 				D1A4C929198A52EC001512A2 /* ViewController.swift */,
+				D1A4C946198A5927001512A2 /* ShutupButton.swift */,
 				D1A4C92B198A52EC001512A2 /* Main.storyboard */,
 				D1A4C92E198A52EC001512A2 /* Images.xcassets */,
 				D1A4C925198A52EC001512A2 /* Supporting Files */,
@@ -210,6 +213,7 @@
 			files = (
 				D1A4C92A198A52EC001512A2 /* ViewController.swift in Sources */,
 				D1A4C928198A52EC001512A2 /* AppDelegate.swift in Sources */,
+				D1A4C947198A5927001512A2 /* ShutupButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

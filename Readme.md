@@ -12,4 +12,4 @@ Chats is released under the [MIT License][3].
 
 ## Thanks
 
-[1]: https://github.com/mohamad-ibrahim/ShutupButton/raw/master/ShutupButton.gif
+[1]: https://raw.githubusercontent.com/mohamad-ibrahim/Shutup-Button/master/ShutupButton.gif

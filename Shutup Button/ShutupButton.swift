@@ -20,48 +20,45 @@ class ShutupButton: UIButton {
     let speakerPath: CGPath = {
         
         let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, 46,18)
-        CGPathAddLineToPoint(path,nil,34,32)
-        CGPathAddLineToPoint(path,nil,10,32)
-        CGPathAddLineToPoint(path,nil,10,67)
-        CGPathAddLineToPoint(path,nil,34,67)
-        CGPathAddLineToPoint(path,nil,46,81)
-        CGPathAddLineToPoint(path,nil,46,18)
+        CGPathMoveToPoint(path, nil, 50,20)
+        CGPathAddLineToPoint(path,nil,50,80)
+        CGPathAddLineToPoint(path,nil,32,66)
+        CGPathAddLineToPoint(path,nil,10,66)
+        CGPathAddLineToPoint(path,nil,10,34)
+        CGPathAddLineToPoint(path,nil,32,34)
+        CGPathAddLineToPoint(path,nil,50,20)
 
         return path
-
     }()
     
     let b1Path: CGPath = {
     let path = CGPathCreateMutable()
-    CGPathMoveToPoint(path,nil,58,42 )
-    CGPathAddCurveToPoint(path,nil,60,45,60,54,58,57)
+    CGPathMoveToPoint(path,nil,60,60)
+    CGPathAddCurveToPoint(path,nil,66,54,66,44,60,40)
     return path
+        
     }()
     
     let b1MutedPath: CGPath = {
         let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path,nil,38,18 )
-        CGPathAddLineToPoint(path,nil,49,28)
+        CGPathMoveToPoint(path,nil,60,36 )
+        CGPathAddLineToPoint(path,nil,42,18)
         return path
         }()
-  
+    
     let b2Path: CGPath = {
         let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path,nil,64,36 )
-        CGPathAddCurveToPoint(path,nil,69,42,69,58,64,63)
+        CGPathMoveToPoint(path,nil,70,68 )
+        CGPathAddCurveToPoint(path,nil,80,60,82,44,70,30)
         return path
-
-
         }()
     
     let b2MutedPath: CGPath = {
         let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path,nil,38,28)
-        CGPathAddLineToPoint(path,nil,49,18)
+        CGPathMoveToPoint(path,nil,60,20)
+        CGPathAddLineToPoint(path,nil,42,38)
         return path
         }()
-    
     
     
     init(frame: CGRect) {
@@ -103,14 +100,14 @@ class ShutupButton: UIButton {
         
         let rightTransform = CABasicAnimation(keyPath: "path")
         rightTransform.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        rightTransform.duration = 0.5
+        rightTransform.duration = 0.3
         rightTransform.fillMode = kCAFillModeBackwards
         
         let leftTransform = rightTransform.copy() as CABasicAnimation
         let speakerTransformStart = CABasicAnimation(keyPath: "strokeStart")
-        speakerTransformStart.duration = 0.5
+        speakerTransformStart.duration = 0.2
         let speakerTransformEnd = CABasicAnimation(keyPath: "strokeEnd")
-        speakerTransformEnd.duration = 0.5
+        speakerTransformEnd.duration = 0.2
         
             
         
@@ -120,16 +117,24 @@ class ShutupButton: UIButton {
           
         leftTransform.toValue = b1MutedPath
         rightTransform.toValue = b2MutedPath
-        speakerTransformStart.toValue = 0.1
-        speakerTransformEnd.toValue = 0.9
+        speakerTransformStart.toValue = 0.13
+        speakerTransformEnd.toValue = 0.93
         
             
             
         } else {
            leftTransform.toValue = b1Path
            rightTransform.toValue = b2Path
+            
            speakerTransformStart.toValue = 0
+           speakerTransformStart.beginTime = CACurrentMediaTime()+0.1
+            
            speakerTransformEnd.toValue = 1
+           speakerTransformEnd.beginTime = CACurrentMediaTime()+0.1
+           speakerTransformStart.fillMode = kCAFillModeBackwards
+           speakerTransformEnd.fillMode = kCAFillModeBackwards
+            
+           
         }
         
         self.beat1Layer.ocb_applyAnimation(leftTransform)

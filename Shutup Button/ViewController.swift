@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 37/255, green: 122/255, blue: 24/255, alpha: 1)
         
-        button = ShutupButton (frame: CGRectMake(135, 135, 50, 50))
+        button = ShutupButton (frame: CGRectMake(135, 135, 60, 60))
         button.addTarget(self, action: "toggle:", forControlEvents:.TouchUpInside)
         self.view.addSubview(button)
     

@@ -16,139 +16,126 @@ class ShutupButton: UIButton {
     var speakerLayer: CAShapeLayer! = CAShapeLayer()
     var beat1Layer: CAShapeLayer! = CAShapeLayer()
     var beat2Layer: CAShapeLayer! = CAShapeLayer()
-    let enabledStrokeStart:CGFloat = 0.0
-    let enabledStrokeEnd:CGFloat = 1.0
+
+    let speakerPath: CGPath = {
+        
+        let path = CGPathCreateMutable()
+        CGPathMoveToPoint(path, nil, 46,18)
+        CGPathAddLineToPoint(path,nil,34,32)
+        CGPathAddLineToPoint(path,nil,10,32)
+        CGPathAddLineToPoint(path,nil,10,67)
+        CGPathAddLineToPoint(path,nil,34,67)
+        CGPathAddLineToPoint(path,nil,46,81)
+        CGPathAddLineToPoint(path,nil,46,18)
+
+        return path
+
+    }()
     
-    let muteStrokeStart:CGFloat = 0.1
-    let muteStrokeEnd: CGFloat = 0.9
+    let b1Path: CGPath = {
+    let path = CGPathCreateMutable()
+    CGPathMoveToPoint(path,nil,58,42 )
+    CGPathAddCurveToPoint(path,nil,60,45,60,54,58,57)
+    return path
+    }()
     
-    let b1Path,b2Path,speakerPath,b1MutedPath,b2MutedPath,speakerMutedPath: CGPath
+    let b1MutedPath: CGPath = {
+        let path = CGPathCreateMutable()
+        CGPathMoveToPoint(path,nil,38,18 )
+        CGPathAddLineToPoint(path,nil,49,28)
+        return path
+        }()
+  
+    let b2Path: CGPath = {
+        let path = CGPathCreateMutable()
+        CGPathMoveToPoint(path,nil,64,36 )
+        CGPathAddCurveToPoint(path,nil,69,42,69,58,64,63)
+        return path
+
+
+        }()
     
-    
+    let b2MutedPath: CGPath = {
+        let path = CGPathCreateMutable()
+        CGPathMoveToPoint(path,nil,38,28)
+        CGPathAddLineToPoint(path,nil,49,18)
+        return path
+        }()
     
     
     
     init(frame: CGRect) {
-        
-        
+        super.init(frame: frame)
         let h  = frame.size.height
         let w = frame.size.width
         
-        b1Path = {
-            let path = CGPathCreateMutable()
-            CGPathMoveToPoint(path,nil,0,0)
-            CGPathAddQuadCurveToPoint(path,nil,w*0.07,h*0.34/2,0,h*0.34)
-            return path
-            }()
-        
-        b2Path = {
-            let path = CGPathCreateMutable()
-            CGPathMoveToPoint(path,nil,0,0)
-            CGPathAddQuadCurveToPoint(path,nil,w*0.14,h*0.6/2,0,h*0.6)
-            return path
-            }()
-        
-        
-        speakerPath = {
-            let path = CGPathCreateMutable()
-            CGPathMoveToPoint(path,nil,w/2,h)
-            CGPathAddLineToPoint(path,nil,w/2,0)
-            CGPathAddLineToPoint(path,nil,(w/2)*40/75,h*0.25)
-            CGPathAddLineToPoint(path,nil,0,h*0.25)
-            CGPathAddLineToPoint(path,nil,0,h*0.75)
-            CGPathAddLineToPoint(path,nil,(w/2)*40/75,h*0.75)
-            CGPathAddLineToPoint(path,nil,w/2,h)
-            return path
-            }()
-        
-       
-       b1MutedPath = {
-            let path = CGPathCreateMutable()
-            CGPathMoveToPoint(path,nil,0,h*0.26)
-            CGPathAddQuadCurveToPoint(path,nil,w*0.26/2,h*0.26/2,w*0.26,0)
-            return path
-            }()
-        
-        b2MutedPath = {
-            let path = CGPathCreateMutable()
-            CGPathMoveToPoint(path,nil,0,0)
-            CGPathAddQuadCurveToPoint(path,nil,w*0.26/2,h*0.26/2,w*0.26,h*0.26)
-            return path
-            }()
-        
-        
-        speakerMutedPath = {
-            let path = CGPathCreateMutable()
-            CGPathMoveToPoint(path,nil,w/2,h)
-            CGPathAddLineToPoint(path,nil,w/2,0)
-            CGPathAddLineToPoint(path,nil,(w/2)*40/75,h*0.25)
-            CGPathAddLineToPoint(path,nil,0,h*0.25)
-            CGPathAddLineToPoint(path,nil,0,h*0.75)
-            CGPathAddLineToPoint(path,nil,(w/2)*40/75,h*0.75)
-            CGPathAddLineToPoint(path,nil,w/2,h)
-            return path
-            }()
 
-        
-        
-        
-        super.init(frame: frame)
-        
-        
         self.speakerLayer.path = speakerPath
         self.beat1Layer.path = b1Path
         self.beat2Layer.path = b2Path
+        var totalBounds = CGRectZero
+        
+        for path in [speakerPath,b1Path,b2Path] {
+            totalBounds = CGRectUnion(totalBounds, CGPathGetPathBoundingBox(CGPathCreateCopyByStrokingPath(path, nil, 4, kCGLineCapRound, kCGLineJoinMiter, 4)))
+        }
         
         for layer in [speakerLayer,beat1Layer, beat2Layer] {
             layer.fillColor = nil
             layer.strokeColor = UIColor.whiteColor().CGColor
             layer.lineWidth = 4
-            layer.miterLimit = 2
+            layer.miterLimit = 4
+            layer.lineJoin = kCALineJoinRound
             layer.lineCap = kCALineCapRound
             layer.masksToBounds = true
-            
-            let strokingPath = CGPathCreateCopyByStrokingPath(layer.path, nil, 4, kCGLineCapRound, kCGLineJoinMiter, 4)
-            
-            layer.bounds = CGPathGetPathBoundingBox(strokingPath)
-            
-            
+            layer.bounds = totalBounds
             layer.actions = [
                 "strokeStart": NSNull(),
                 "strokeEnd": NSNull(),
                 "transform": NSNull(),
                 "translate":NSNull(),
             ]
-            
             self.layer.addSublayer(layer)
         }
-        
-        self.beat1Layer.position = CGPointMake(w*0.55,0)
-        self.beat2Layer.position = CGPointMake(w*0.75,0)
     }
     
     var mute:Bool = false {
     didSet{
         
         let rightTransform = CABasicAnimation(keyPath: "path")
-        rightTransform.timingFunction = CAMediaTimingFunction(controlPoints: 0.5, -0.8, 0.5, 1.85)
-        rightTransform.duration = 0.3
+        rightTransform.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        rightTransform.duration = 0.5
         rightTransform.fillMode = kCAFillModeBackwards
         
         let leftTransform = rightTransform.copy() as CABasicAnimation
+        let speakerTransformStart = CABasicAnimation(keyPath: "strokeStart")
+        speakerTransformStart.duration = 0.5
+        let speakerTransformEnd = CABasicAnimation(keyPath: "strokeEnd")
+        speakerTransformEnd.duration = 0.5
+        
+            
+        
+        
         
         if self.mute {
+          
+        leftTransform.toValue = b1MutedPath
+        rightTransform.toValue = b2MutedPath
+        speakerTransformStart.toValue = 0.1
+        speakerTransformEnd.toValue = 0.9
+        
             
-          rightTransform.toValue = b2MutedPath
-          leftTransform.toValue = b1MutedPath
             
         } else {
-            
-            rightTransform.toValue = b2Path
-            leftTransform.toValue = b1Path
+           leftTransform.toValue = b1Path
+           rightTransform.toValue = b2Path
+           speakerTransformStart.toValue = 0
+           speakerTransformEnd.toValue = 1
         }
         
         self.beat1Layer.ocb_applyAnimation(leftTransform)
         self.beat2Layer.ocb_applyAnimation(rightTransform)
+        self.speakerLayer.ocb_applyAnimation(speakerTransformStart)
+        self.speakerLayer.ocb_applyAnimation(speakerTransformEnd)
         
         
     }
